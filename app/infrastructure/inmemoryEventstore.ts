@@ -10,11 +10,28 @@ import {
   type ReadStreamResult,
 } from '@event-driven-io/emmett';
 import { assertExpectedVersionMatchesCurrent } from '@event-driven-io/emmett';
+import {CartEvents} from "@/app/api/events/CartEvents";
 
 const streams = new Map<string, EventEnvelope[]>();
 
 export const debugAllStreams = ():Map<string, EventEnvelope[]> => {
   return streams
+}
+
+export type Subscription<T extends Event> = (nextExpectedStreamVersion: bigint, events:T[])=>void
+
+const subscriptions = new Map<String, Subscription<any>[]>
+
+export const subscribeStream = <T extends Event>(stream:string, subscription:Subscription<T>): Subscription<T> => {
+  subscriptions.set(stream, [...subscriptions.get(stream)??[], subscription])
+  findEventStore().readStream(stream).then(result => {
+    subscription(result?.currentStreamVersion??BigInt(0), result?.events as T[] || [])
+  })
+  return subscription
+}
+
+export const unsubscribeStream = <T extends Event>(stream:string, subscription:Subscription<T>) => {
+  subscriptions.set(stream, (subscriptions.get(stream)??[]).filter(subscribed => subscribed !== subscription))
 }
 
 export const findEventStore = (): EventStore => {
@@ -116,7 +133,9 @@ export const findEventStore = (): EventStore => {
       const result: AppendToStreamResult = {
         nextExpectedStreamVersion: positionOfLastEventInTheStream,
       };
-
+      subscriptions.get(streamName)?.forEach((subscription)=>{
+        subscription(result.nextExpectedStreamVersion, events)
+      })
       return Promise.resolve(result);
     },
   };

@@ -1,32 +1,71 @@
 'use client'
 
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import {DebugEvents} from "@/app/debug/eventsdebug";
-import Exercise1 from "@/app/components/Exercise1";
-import Exercise2 from "./components/Exercise2";
+import {findEventStore, subscribeStream} from "@/app/infrastructure/inmemoryEventstore";
+import {Streams} from "@/app/api/Streams";
+import {v4} from "uuid";
+import Navigation from "@/app/components/Navigation";
+import {CartEvents} from "@/app/api/events/CartEvents";
+import AddItem from "@/app/slices/additem/AddItem";
 
-export default function PrototypePage() {
+export default function ProductsPage() {
 
-    const [currentExercise, setCurrentExercise] = useState<number>(1)
 
-    return <section className="section main-container">
-        <div className="">
-            <div className="tabs">
-                <ul>
-                    <li onClick={()=>setCurrentExercise(1)} className={currentExercise == 1 ? "is-active" : ""}><a>Exercise 1</a></li>
-                    <li onClick={()=>setCurrentExercise(2)} className={currentExercise == 2 ? "is-active" : ""}><a>Exercise 2</a></li>
-                    <li onClick={()=>setCurrentExercise(3)} className={currentExercise == 3 ? "is-active" : ""}><a>Exercise 3</a></li>
-                    <li onClick={()=>setCurrentExercise(4)} className={currentExercise == 4 ? "is-active" : ""}><a>Exercise 4</a></li>
-                </ul>
-            </div>
-            <div className="columns">
-                <div className={"container"}>
-                {currentExercise == 1 ? <Exercise1/> : <span/>}
-                {currentExercise == 2 ? <Exercise2/> : <span/>}
+    const [cartSession, setCartSession] = useState(v4())
+    const [products, setProducts] = useState([
+        {
+            "productId": "1",
+            "price": 19.99,
+            "name": "Premium Coffee Brand",
+            "description": "A premium coffee brand that offers a unique and exceptional coffee experience.",
+        },
+        {
+            "productId": "2",
+            "price": 24.99,
+            "name": "Single Origin Ethiopian",
+            "description": "Rich, floral Ethiopian coffee with distinctive blueberry notes and smooth finish.",
+        },
+        {
+            "productId": "3",
+            "price": 21.99,
+            "name": "Dark Roast Espresso",
+            "description": "Bold and intense espresso blend perfect for creating authentic Italian coffee drinks.",
+        },
+        {
+            "productId": "4",
+            "price": 18.99,
+            "name": "Colombian Supremo",
+            "description": "Medium roasted Colombian beans with caramel sweetness and nutty undertones.",
+        },
+        {
+            "productId": "5",
+            "price": 22.99,
+            "name": "Organic Cold Brew Blend",
+            "description": "Specially crafted blend for smooth, low-acid cold brew with chocolate notes.",
+        }
+    ])
+    return (<>
+        <Navigation/>
+        <section className="section main-container container content">
+            <div className="">
+                <div className="columns is-flex-wrap-wrap">
+                    {products.map((product) => {
+                        return <div className={"column is-4 p-3 m-4"}>
+                            <div className={"columns"}>
+                                <div className={"panel"}>
+                                    <h3 className={"panel-heading"}>{product.name}</h3>
+                                    <div className={"panel-block"}>
+                                        <div>{product.description}</div>
+                                        <b className={"notification"}>{product.price}</b>
+                                    </div>
+                                    <AddItem aggregateId={cartSession} selectedProduct={product}/></div>
+                            </div>
+                        </div>
+                    })}
                 </div>
+                <DebugEvents/>
             </div>
-        </div>
-        <DebugEvents/>
-
-    </section>
+        </section>
+    </>)
 }
