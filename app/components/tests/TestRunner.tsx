@@ -7,8 +7,8 @@ export type TestCollection<COMMAND, EVENT> = { slice_name: string, tests: TestCa
 export type TestCase<COMMAND, EVENT> = {
     test_name: string,
     given: EVENT[],
-    when: COMMAND,
-    test: (testName:string, given:EVENT[], when: COMMAND) => Promise<TestResult>
+    when?: COMMAND,
+    test: (testName:string, given:EVENT[], when?: COMMAND) => Promise<TestResult>
 }
 
 export type TestResult = {
