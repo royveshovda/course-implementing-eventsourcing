@@ -4,7 +4,6 @@ import {addItemCommandHandler} from "@/app/slices/additem/commandHandler";
 import {v4} from "uuid";
 import { Streams } from "@/app/api/Streams";
 import {CartEvents} from "@/app/api/events/CartEvents";
-import AddItemTests from "@/app/slices/additem/AddItemTests";
 
 export type Product = {
     name: string,
@@ -19,15 +18,20 @@ export default function AddItem(props: {aggregateId: string, selectedProduct: Pr
         <div className={"control"}>
             <button onClick={async () => {
 
-                    //let result = await findEventStore().readStream<CartEvents>(Streams.Cart)
-                    //let events = result?.events || []
-                    /*let resultEvents = await addItemCommandHandler(events, {
+                    let result = await findEventStore().readStream<CartEvents>(Streams.Cart)
+                    let events = result?.events || []
+                    let resultEvents = await addItemCommandHandler(events, {
                         type: 'AddItem', data: {
-                           //..
+                            name: props.selectedProduct.name,
+                            price: props.selectedProduct.price,
+                            itemId: v4(),
+                            productId: props.selectedProduct.productId,
+                            description: props.selectedProduct.description,
+                            aggregateId: props.aggregateId
                         }
-                    })*/
-                    /*await findEventStore().appendToStream(Streams.Cart, resultEvents,
-                        {expectedStreamVersion: result?.currentStreamVersion})*/
+                    })
+                    await findEventStore().appendToStream(Streams.Cart, resultEvents,
+                        {expectedStreamVersion: result?.currentStreamVersion})
                 }
 
             } className={"button is-info m-2"}>Add Item</button>
