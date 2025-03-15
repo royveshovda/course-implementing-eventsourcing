@@ -24,9 +24,9 @@ export default function Navigation() {
                         </a>
                         <a className="navbar-item" onClick={() => router.push("/specs")}>
                             <span className="icon">
-                                <i className="fas fa-shopping-cart"></i>
+                                <i className="fas fa-vial"></i>
                             </span>
-                            <span>Cart</span>
+                            <span>Spec</span>
                         </a>
                     </div>
                 </div>
