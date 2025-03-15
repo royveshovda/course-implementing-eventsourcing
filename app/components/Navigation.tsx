@@ -16,7 +16,7 @@ export default function Navigation() {
                             </span>
                             <span>Products</span>
                         </a>
-                        <a className="navbar-item" onClick={() => router.push("/")}>
+                        <a className="navbar-item" onClick={() => router.push("/cart")}>
                             <span className="icon">
                                 <i className="fas fa-shopping-cart"></i>
                             </span>

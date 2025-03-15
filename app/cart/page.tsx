@@ -3,8 +3,9 @@
 import React, {useEffect} from "react";
 import {DebugEvents} from "@/app/debug/eventsdebug";
 import Navigation from "@/app/components/Navigation";
+import CartItems from "@/app/slices/cartitems/CartItems";
 
-export default function PrototypePage() {
+export default function PrototypePage(props: {sessionId: string}) {
 
     return (<>
         <Navigation/>
@@ -12,7 +13,7 @@ export default function PrototypePage() {
         <div className="">
             <div className="columns">
                 <div className={"container"}>
-                   No cart items Read Model implemented
+                   <CartItems aggregateId={props.sessionId}/>
                 </div>
             </div>
         </div>

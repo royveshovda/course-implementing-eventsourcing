@@ -4,6 +4,7 @@ import {addItemCommandHandler} from "@/app/slices/additem/commandHandler";
 import {v4} from "uuid";
 import { Streams } from "@/app/api/Streams";
 import {CartEvents} from "@/app/api/events/CartEvents";
+import {useRouter} from "next/navigation";
 
 export type Product = {
     name: string,
@@ -13,6 +14,8 @@ export type Product = {
 }
 
 export default function AddItem(props: {aggregateId: string, selectedProduct: Product}) {
+
+    let router = useRouter()
 
     return <div>
         <div className={"control"}>
@@ -32,6 +35,7 @@ export default function AddItem(props: {aggregateId: string, selectedProduct: Pr
                     })
                     await findEventStore().appendToStream(Streams.Cart, resultEvents,
                         {expectedStreamVersion: result?.currentStreamVersion})
+                router.push("/cart")
                 }
 
             } className={"button is-info m-2"}>Add Item</button>
