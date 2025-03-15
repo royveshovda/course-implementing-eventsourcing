@@ -48,24 +48,24 @@ export default function ProductsPage() {
     return (<>
         <Navigation/>
         <section className="section main-container container content">
-            <div className="">
-                <div className="columns is-flex-wrap-wrap">
-                    {products.map((product) => {
-                        return <div className={"column is-4 p-3 m-4"}>
-                            <div className={"columns"}>
-                                <div className={"panel"}>
-                                    <h3 className={"panel-heading"}>{product.name}</h3>
-                                    <div className={"panel-block"}>
-                                        <div>{product.description}</div>
-                                        <b className={"notification"}>{product.price}</b>
-                                    </div>
-                                    <AddItem aggregateId={cartSession} selectedProduct={product}/></div>
-                            </div>
+        <div className="">
+            <div className="columns is-flex-wrap-wrap">
+                {products.map((product) => {
+                    return <div className={"column is-4 p-3 m-4"}>
+                        <div className={"columns"}>
+                            <div className={"panel"}>
+                                <h3 className={"panel-heading"}>{product.name}</h3>
+                                <div className={"panel-block"}>
+                                    <div>{product.description}</div>
+                                    <b className={"notification"}>{product.price}</b>
+                                </div>
+                                <AddItem aggregateId={cartSession} selectedProduct={product}/>
                         </div>
-                    })}
+                    </div>
                 </div>
-                <DebugEvents/>
+                })}
             </div>
-        </section>
-    </>)
+            <DebugEvents/>
+        </div>
+    </section></>)
 }
