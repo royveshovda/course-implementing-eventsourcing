@@ -1,19 +1,23 @@
-import {findEventStore, subscribeStream} from "@/app/infrastructure/inmemoryEventstore";
+import {findEventStore, subscribeStream, unsubscribeStream} from "@/app/infrastructure/inmemoryEventstore";
 import {useEffect, useState} from "react";
 import {Streams} from "@/app/api/Streams";
 import {CartItem, cartItemsStateView} from "@/app/slices/cartitems/CartItemsStateView";
 import {CartEvents} from "@/app/api/events/CartEvents";
+import RemoveItem from "@/app/slices/removeitem/RemoveItem";
 
 export default function CartItems(props: { aggregateId: string }) {
     const [cartItems, setCartItems] = useState<CartItem[]>([])
 
+
     useEffect(() => {
-        (async () => {
-            const result = await findEventStore().readStream<CartEvents>(Streams.Cart)
-            cartItemsStateView(cartItems ?? [], result?.events || []).then(items => {
-                setCartItems(items)
+        let subscription = subscribeStream(Streams.Cart, (nextExpectedStreamVersion, events: CartEvents[],) => {
+            setCartItems((prevState) => {
+                return cartItemsStateView(prevState, events)
             })
-        })()
+        })
+        return () => {
+            unsubscribeStream(Streams.Cart, subscription)
+        }
     }, []);
 
     return (
@@ -39,6 +43,7 @@ export default function CartItems(props: { aggregateId: string }) {
                                 <tr key={index}>
                                     <td>{item.name}</td>
                                     <td>${item.price.toFixed(2)}</td>
+                                    <td><RemoveItem aggregateId={item.aggregateId} itemId={item.itemId}/></td>
                                 </tr>
                             ))}
                             </tbody>
