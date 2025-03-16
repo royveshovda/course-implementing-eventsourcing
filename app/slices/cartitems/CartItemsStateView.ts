@@ -7,7 +7,7 @@ export type CartItem = {
     aggregateId: string
 }
 
-export const cartItemsStateView = async (state: CartItem[], event: CartEvents[]): Promise<CartItem[]> => {
+export const cartItemsStateView = (state: CartItem[], event: CartEvents[]): CartItem[] => {
     let result: CartItem[] = [...state]
 
     event.forEach(event => {
