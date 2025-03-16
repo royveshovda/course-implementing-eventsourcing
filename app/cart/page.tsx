@@ -4,8 +4,9 @@ import React, {useEffect} from "react";
 import {DebugEvents} from "@/app/debug/eventsdebug";
 import Navigation from "@/app/components/Navigation";
 import CartItems from "@/app/slices/cartitems/CartItems";
+import {CART_SESSION} from "@/app/cart/CartSession";
 
-export default function PrototypePage(props: {sessionId: string}) {
+export default function CartPage() {
 
     return (<>
         <Navigation/>
@@ -13,7 +14,7 @@ export default function PrototypePage(props: {sessionId: string}) {
         <div className="">
             <div className="columns">
                 <div className={"container"}>
-                   <CartItems aggregateId={props.sessionId}/>
+                   <CartItems aggregateId={CART_SESSION}/>
                 </div>
             </div>
         </div>

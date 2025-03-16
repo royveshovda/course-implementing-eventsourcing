@@ -28,6 +28,12 @@ export default function Navigation() {
                             </span>
                             <span>Spec</span>
                         </a>
+                        <a className="navbar-item" onClick={() => router.push("/backoffice")}>
+                            <span className="icon">
+                                <i className="fas fa-cogs"></i>
+                            </span>
+                            <span>Backoffice</span>
+                        </a>
                     </div>
                 </div>
             </div>
