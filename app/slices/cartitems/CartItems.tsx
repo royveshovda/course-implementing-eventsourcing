@@ -4,6 +4,8 @@ import {Streams} from "@/app/api/Streams";
 import {CartItem, cartItemsStateView} from "@/app/slices/cartitems/CartItemsStateView";
 import {CartEvents} from "@/app/api/events/CartEvents";
 import RemoveItem from "@/app/slices/removeitem/RemoveItem";
+import ClearCart from "@/app/slices/clearcart/ClearCart";
+import {CART_SESSION} from "@/app/cart/CartSession";
 
 export default function CartItems(props: { aggregateId: string }) {
     const [cartItems, setCartItems] = useState<CartItem[]>([])
@@ -43,7 +45,7 @@ export default function CartItems(props: { aggregateId: string }) {
                                 <tr key={index}>
                                     <td>{item.name}</td>
                                     <td>${item.price.toFixed(2)}</td>
-                                    <td><RemoveItem aggregateId={item.aggregateId} itemId={item.itemId}/></td>
+                                    <td><RemoveItem aggregateId={CART_SESSION} itemId={item.itemId}/></td>
                                 </tr>
                             ))}
                             </tbody>
@@ -57,6 +59,7 @@ export default function CartItems(props: { aggregateId: string }) {
                     </div>
 
                     <div className="buttons is-right mt-4">
+                        <ClearCart aggregateId={CART_SESSION}/>
                         <button className="button is-primary">
                             <span className="icon">
                                 <i className="fas fa-shopping-cart"></i>
