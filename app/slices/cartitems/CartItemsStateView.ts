@@ -4,6 +4,7 @@ export type CartItem = {
     name: string,
     price: number,
     itemId: string,
+    productId: string,
     aggregateId: string
 }
 
@@ -17,6 +18,7 @@ export const cartItemsStateView = (state: CartItem[], event: CartEvents[]): Cart
                     name: event.data.name,
                     price: event.data.price,
                     itemId: event.data.itemId,
+                    productId: event.data.productId,
                     aggregateId: event.data.aggregateId
                 })
                 break
