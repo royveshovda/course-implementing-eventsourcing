@@ -1,13 +1,12 @@
 'use client'
 
-import React, {useEffect} from "react";
+import React from "react";
 import {DebugEvents} from "@/app/debug/eventsdebug";
 import Navigation from "@/app/components/Navigation";
 import AddItemTests from "@/app/slices/additem/AddItemTests";
-import CartItems from "@/app/slices/cartitems/CartItems";
 import CartItemsTests from "@/app/slices/cartitems/CartItemsTests";
-import RemoveItem from "@/app/slices/removeitem/AddItem";
 import RemoveItemTests from "@/app/slices/removeitem/RemoveItemTests";
+import InventoriesTest from "@/app/slices/inventory/InventoriesTest";
 
 export default function SpecPage() {
 
@@ -19,6 +18,7 @@ export default function SpecPage() {
                <AddItemTests/>
                <CartItemsTests/>
                <RemoveItemTests/>
+                <InventoriesTest/>
             </div>
         </div>
         <DebugEvents/>
