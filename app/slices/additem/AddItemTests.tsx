@@ -1,12 +1,9 @@
-import {assert, runTests, TestCase, TestCollection, TestResult} from "@/app/components/tests/TestRunner";
+import {runTests, TestCollection} from "@/app/components/tests/TestRunner";
 import {AddItemCommand} from "@/app/api/commands/AddItemCommand";
-import {Event} from "@event-driven-io/emmett"
 import {addItemCommandHandler} from "@/app/slices/additem/commandHandler";
 import {CartEvents} from "@/app/api/events/CartEvents";
-import {ItemAddedEvent} from "@/app/api/events/ItemAddedEvent";
 import {v4} from "uuid";
 import {TestResultViewer} from "@/app/components/TestResultViewer";
-import {useEffect} from "react";
 
 
 const prepareTestCollection = (): TestCollection<AddItemCommand, CartEvents> => {
@@ -39,7 +36,7 @@ const prepareTestCollection = (): TestCollection<AddItemCommand, CartEvents> => 
                     }
                 },
                 test: async (testName: string, given, when) => {
-                    let result = await addItemCommandHandler(given, when)
+                    let result = await addItemCommandHandler(given, when!!)
                     return {
                         test_name: testName,
                         passed: result.length == 1,
@@ -97,7 +94,7 @@ const prepareTestCollection = (): TestCollection<AddItemCommand, CartEvents> => 
                 },
                 test: async (testName:string, given, when) => {
                     try {
-                        await addItemCommandHandler(given, when)
+                        await addItemCommandHandler(given, when!!)
                         return {test_name: testName, passed: false, message: "should not be able to add more than 3 items"}
                     } catch (e) {
                         return {test_name: testName, passed: true, message: "expected validation error if more than 3 items added"}
