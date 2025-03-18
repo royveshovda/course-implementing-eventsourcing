@@ -17,7 +17,7 @@ const requestToArchiveItemCommandHandler = (events: Event[], command: RequestToA
 
 }
 
-export const requestItemArchiveTodoListProcessor = async (events: PriceChangedEvent[]) => {
+export const priceChangeProcessor = async (events: PriceChangedEvent[]) => {
 
    let cartStream = await findEventStore().readStream<CartEvents>(Streams.Cart)
     let cartsWithProducts = cartsWithProductsStateView([], cartStream?.events||[])
