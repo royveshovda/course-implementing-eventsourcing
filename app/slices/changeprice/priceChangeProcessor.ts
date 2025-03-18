@@ -17,7 +17,7 @@ const requestToArchiveItemCommandHandler = (events: Event[], command: RequestToA
 
 }
 
-export const requestItemArchiveTodoListProcessor = async (events: PriceChangedEvent[]) => {
+export const priceChangeProcessor = async (events: PriceChangedEvent[]) => {
 
    let cartStream = await findEventStore().readStream<CartEvents>(Streams.Cart)
     let cartsWithProducts = cartsWithProductsStateView([], cartStream?.events||[])
@@ -27,14 +27,7 @@ export const requestItemArchiveTodoListProcessor = async (events: PriceChangedEv
             let resultEvents = cartsWithProducts.flatMap(cart => {
                 let cartItem = cart.cartItems.find(it => it.productId == event.data.productId)
                 if (cartItem) {
-                    return requestToArchiveItemCommandHandler([], {
-                        type: 'RequestToArchiveItem',
-                        data: {
-                            aggregateId: cart.cartId,
-                            productId: event.data.productId,
-                            itemId: cartItem.cartItemId
-                        }
-                    })
+                   // TODO open the TODO item by requesting to archive the item
 
                 }
                 return []

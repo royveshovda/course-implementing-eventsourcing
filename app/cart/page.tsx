@@ -8,6 +8,10 @@ import {CART_SESSION} from "@/app/cart/CartSession";
 
 export default function CartPage() {
 
+    useEffect(() => {
+
+    }, []);
+
     return (<>
         <Navigation/>
         <section className="section main-container">
