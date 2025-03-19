@@ -4,5 +4,6 @@ export type ItemRemovedEvent = Event<"ItemRemoved",{
     
 	itemId:string
 	aggregateId:string
+	productId:string
     
 }>

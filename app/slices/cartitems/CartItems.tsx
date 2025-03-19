@@ -7,6 +7,7 @@ import RemoveItem from "@/app/slices/removeitem/RemoveItem";
 import ClearCart from "@/app/slices/clearcart/ClearCart";
 import {CART_SESSION} from "@/app/cart/CartSession";
 import Inventories from "@/app/slices/inventory/Inventories";
+import SubmitCart from "@/app/slices/submitcart/SubmitCart";
 
 export default function CartItems(props: { aggregateId: string }) {
     const [cartItems, setCartItems] = useState<CartItem[]>([])
@@ -62,12 +63,7 @@ export default function CartItems(props: { aggregateId: string }) {
 
                     <div className="buttons is-right mt-4">
                         <ClearCart aggregateId={CART_SESSION}/>
-                        <button className="button is-primary">
-                            <span className="icon">
-                                <i className="fas fa-shopping-cart"></i>
-                            </span>
-                            <span>Checkout</span>
-                        </button>
+                        <SubmitCart productIds={cartItems?.map(it => it.productId)} aggregateId={CART_SESSION}/>
                     </div>
                 </>
             )}

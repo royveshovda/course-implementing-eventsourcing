@@ -8,6 +8,7 @@ import CartItemsTests from "@/app/slices/cartitems/CartItemsTests";
 import RemoveItemTests from "@/app/slices/removeitem/RemoveItemTests";
 import InventoriesTest from "@/app/slices/inventory/InventoriesTest";
 import CartsWithProductsTest from "@/app/slices/changeprice/CartsWithProductsStateViewTest";
+import SubmitCartTests from "@/app/slices/submitcart/SubmitCartTests";
 
 export default function SpecPage() {
 
@@ -21,6 +22,7 @@ export default function SpecPage() {
                <RemoveItemTests/>
                 <InventoriesTest/>
                 <CartsWithProductsTest/>
+                <SubmitCartTests/>
             </div>
         </div>
         <DebugEvents/>
