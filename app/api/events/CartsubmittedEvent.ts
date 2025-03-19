@@ -1,6 +1,6 @@
 import {Event} from "@event-driven-io/emmett"
 
-export type CartsubmittedEvent = Event<"Cartsubmitted",{
+export type CartsubmittedEvent = Event<"CartSubmitted",{
     
 	aggregateId:string    
     

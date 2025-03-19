@@ -25,6 +25,7 @@ export const cartItemsStateView = (state: CartItem[], event: CartEvents[]): Cart
             case "ItemRemoved":
                 result = result.filter(item => item.itemId !== event.data.itemId)
                 break
+            case "CartSubmitted":
             case "CartCleared":
                 result = []
                 break
