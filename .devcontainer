@@ -1,11 +1,15 @@
 {
   "name": "Node.js 19 Development Container",
   "image": "node:19",
-  "extensions": [
-    "dbaeumer.vscode-eslint",
-    "esbenp.prettier-vscode",
-    "ms-vsliveshare.vsliveshare"
-  ],
-  "postCreateCommand": "nvm install 19 && nvm use 19 && npm install && npm run build && npm run dev"
-
+  "forwardPorts": [3000],
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "dbaeumer.vscode-eslint",
+        "esbenp.prettier-vscode",
+        "ms-vsliveshare.vsliveshare"
+      ]
+    }
+  },
+  "postCreateCommand": "npm install && npm run dev"
 }
