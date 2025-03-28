@@ -3,14 +3,11 @@
 {
 	"name": "Node.js Development Container",
 	// Or use a Dockerfile or Docker Compose file. More info: https://containers.dev/guide/dockerfile
-	"image": "mcr.microsoft.com/devcontainers/typescript-node:dev-22",
+	"image": "mcr.microsoft.com/devcontainers/typescript-node",
 
 	// Features to add to the dev container. More info: https://containers.dev/features.
 	// "features": {},
-  "features": {
-    "ghcr.io/devcontainers-contrib/features/nodejs:1": {}
-  },
-
+  
 	// Use 'forwardPorts' to make a list of ports inside the container available locally.
 	"forwardPorts": [3000],
 
