@@ -11,5 +11,6 @@
       ]
     }
   },
-  "postCreateCommand": "npm install && npm run dev"
+  "postCreateCommand": "npm install",
+  "postStartCommand": "echo 'Container is ready! Run npm run dev to start the development server'"
 }
