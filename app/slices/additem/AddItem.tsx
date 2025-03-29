@@ -19,15 +19,20 @@ export default function AddItem(props: {aggregateId: string, selectedProduct: Pr
         <div className={"control"}>
             <button onClick={async () => {
 
-                    //let result = await findEventStore().readStream<CartEvents>(Streams.Cart)
-                    //let events = result?.events || []
-                    /*let resultEvents = await addItemCommandHandler(events, {
+                    let result = await findEventStore().readStream<CartEvents>(Streams.Cart)
+                    let events = result?.events || []
+                    let resultEvents = await addItemCommandHandler(events, {
                         type: 'AddItem', data: {
-                           //..
+                           aggregateId: props.aggregateId,
+                           description: props.selectedProduct.description,
+                           itemId: v4(),
+                           name: props.selectedProduct.name,
+                           price: props.selectedProduct.price,
+                           productId: props.selectedProduct.productId
                         }
-                    })*/
-                    /*await findEventStore().appendToStream(Streams.Cart, resultEvents,
-                        {expectedStreamVersion: result?.currentStreamVersion})*/
+                    })
+                    await findEventStore().appendToStream(Streams.Cart, resultEvents,
+                        {expectedStreamVersion: result?.currentStreamVersion})
                 }
 
             } className={"button is-info m-2"}>Add Item</button>
