@@ -9,15 +9,6 @@ export default function CartItems(props: { aggregateId: string }) {
     const [cartItems, setCartItems] = useState<CartItem[]>([])
 
     useEffect(() => {
-        (async () => {
-            const result = await findEventStore().readStream<CartEvents>(Streams.Cart)
-            let cartState = cartItemsStateView(cartItems ?? [], result?.events || [])
-            setCartItems(cartState)
-        })()
-    }, []);
-
-    //TODO switch to a stream subscription
-    /*useEffect(() => {
         let subscription = subscribeStream(Streams.Cart, (nextExpectedStreamVersion, events: CartEvents[],) => {
             setCartItems((prevState) => {
                 return cartItemsStateView(prevState, events)
@@ -26,7 +17,7 @@ export default function CartItems(props: { aggregateId: string }) {
         return () => {
             unsubscribeStream(Streams.Cart, subscription)
         }
-    }, []);*/
+    }, []);
 
     return (
         <div className="box">

@@ -7,21 +7,30 @@ import {RemoveItemCommand} from "@/app/api/commands/RemoveItemCommand";
 export const removeItemCommandHandler =
     async (events: CartEvents[], command: RemoveItemCommand): Promise<CartEvents[]> => {
 
-    var itemsInCart = []
+        var itemsInCart: string[] = []
 
-    // TODO rebuild cart state from events
-    // TODO throw error if item to be removed is not in cart
-
-    /*if (itemsInCart.indexOf(command.data.itemId) == -1) {
-        throw new Error("Item is not in cart");
-    }*/
-
-    return [{
-        type: 'ItemRemoved',
-        data: {
-            aggregateId: command.data.aggregateId,
-            itemId: command.data.itemId,
+        for (let event of events) {
+            if (event.type === 'ItemAdded') {
+                itemsInCart.push(event.data.itemId);
+            } else if (event.type === 'ItemRemoved') {
+                itemsInCart = itemsInCart.filter(itemId => itemId !== event.data.itemId);
+            } else if (event.type === 'ItemArchived') {
+                itemsInCart = itemsInCart.filter(itemId => itemId !== event.data.itemId);
+            } else if (event.type == "CartCleared") {
+                itemsInCart = []
+            }
         }
+
+        if (itemsInCart.indexOf(command.data.itemId) == -1) {
+            throw new Error("Item is not in cart");
+        }
+
+        return [{
+            type: 'ItemRemoved',
+            data: {
+                aggregateId: command.data.aggregateId,
+                itemId: command.data.itemId,
+            }
     }]
 
 }
