@@ -14,16 +14,21 @@ export const cartItemsStateView =
     event.forEach(event => {
         switch (event.type) {
             case "ItemAdded":
-                //TODO implement logic
+                result.push({
+                    name: event.data.name,
+                    price: event.data.price,
+                    itemId: event.data.itemId,
+                    aggregateId: event.data.aggregateId
+                })
                 break
             case "ItemRemoved":
-                //TODO implement logic
+                result = result.filter(item => item.itemId !== event.data.itemId)
                 break
             case "CartCleared":
-                //TODO implement logic
+                result = []
                 break
             case "ItemArchived":
-                //TODO implement logic
+                result = result.filter(item => item.itemId !== event.data.itemId)
                 break
         }
     })
