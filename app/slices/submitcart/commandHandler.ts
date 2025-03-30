@@ -9,14 +9,34 @@ import {SubmitCartCommand} from "@/app/api/commands/SubmitCartCommand";
 export const submitCartCommandHandler =
     (events: CartEvents[], command: SubmitCartCommand): CartEvents[] => {
 
-    // TODO build the list of product Ids in Cart
-        let productIdsInCart = []
+        let productIds = events.reduce((acc: string[], event: CartEvents): string[] => {
+            switch (event.type) {
+                case "ItemAdded":
+                    acc.push(event.data.productId)
+                    break
+                case "ItemArchived":
+                case "ItemRemoved":
+                    acc = acc.filter(it => it !== event.data.productId)
+                    break
+                case "CartCleared":
+                    acc = []
+                    break
+            }
+            return acc
+        }, [])
 
-        productIdsInCart.forEach(productId => {
-            // TODO make sure an exception is thrown if the product has no quantity
+        productIds.forEach(productId => {
+            let inventory = command.data.inventories.find(it => it.productId === productId)
+            if (!inventory || inventory.quantity == 0) {
+                throw Error("Cannot order products without quantity")
+            }
         })
 
-        // TODO return cart submitted
-        return []
+        return [{
+            type: 'CartSubmitted',
+            data: {
+                aggregateId: command.data.aggregateId,
+            }
+        }]
 
     }
