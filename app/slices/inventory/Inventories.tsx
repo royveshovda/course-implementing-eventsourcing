@@ -14,8 +14,14 @@ export default function Inventories(props: { productId: string }) {
 
 
     useEffect(() => {
-       // TODO subscribe to the Inventory Stream
-        // TODO update the inventory for the given productId in "props.productId"
+        let subscription = subscribeStream(Streams.Inventory, (nextExpectedStreamVersion, events: InventoryUpdatedEvent[],) => {
+            setInventory((prevState) => {
+                return inventoriesStateView(prevState, events, {productId:props.productId})
+            })
+        })
+        return () => {
+            unsubscribeStream(Streams.Inventory, subscription)
+        }
     }, []);
 
     return (
