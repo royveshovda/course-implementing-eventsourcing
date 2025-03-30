@@ -27,13 +27,19 @@ export const priceChangeProcessor = async (events: PriceChangedEvent[]) => {
             let resultEvents = cartsWithProducts.flatMap(cart => {
                 let cartItem = cart.cartItems.find(it => it.productId == event.data.productId)
                 if (cartItem) {
-                   // TODO open the TODO item by requesting to archive the item
-
+                    return requestToArchiveItemCommandHandler([], {
+                        type: 'RequestToArchiveItem',
+                        data: {
+                            aggregateId: cart.cartId,
+                            productId: event.data.productId,
+                            itemId: cartItem.cartItemId
+                        }
+                    })
                 }
                 return []
             })
             if (resultEvents?.length > 0) {
-            findEventStore().appendToStream(Streams.Cart, resultEvents);
+                findEventStore().appendToStream(Streams.Cart, resultEvents);
             }
         }
     })

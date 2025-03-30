@@ -24,13 +24,24 @@ export const archiveItemTodoListProcessor = async (events: CartEvents[]) => {
 
     let todos: ArchiveItemCommand[] = events.reduce((acc:ArchiveItemCommand[], event:CartEvents):ArchiveItemCommand[] => {
         switch (event.type) {
-            // TODO build a command for each TODO
+            case "ItemArchiveRequested":
+                acc.push({
+                    type: 'ArchiveItem',
+                    data: {
+                        aggregateId: event.data.aggregateId,
+                        productId: event.data.productId,
+                        itemId: event.data.itemId
+                    }
+                })
+                break
+            case "ItemArchived":
+                acc = acc.filter(it => it.data.aggregateId !== event.data.aggregateId)
+                break
         }
         return acc
     }, [])
     todos.forEach((command)=>{
-        let result = []
-        // TODO for each TODO - fire the command
+        var result = archiveItemCommandHandler([], command);
         findEventStore().appendToStream(Streams.Cart, result)
     })
 
